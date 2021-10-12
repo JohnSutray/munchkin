@@ -6,6 +6,10 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "no-restricted-imports": [
+          "error",
+          "libs/*"
+        ],
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {

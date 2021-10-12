@@ -1,0 +1,1 @@
+export const gameUpdate = 'gameUpdate';

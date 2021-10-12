@@ -35,10 +35,6 @@
     },
     "munchkin": {
       "tags": []
-    },
-    "munchkin-e2e": {
-      "tags": [],
-      "implicitDependencies": ["munchkin"]
     }
   }
 }

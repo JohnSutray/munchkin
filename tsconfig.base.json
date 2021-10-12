@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -13,9 +14,9 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
+    "strict": false,
     "paths": {
-      "@munchkin/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+
     }
   },
   "exclude": ["node_modules", "tmp"]

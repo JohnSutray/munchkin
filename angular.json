@@ -41,14 +41,6 @@
           "options": {
             "lintFilePatterns": ["apps/api/**/*.ts"]
           }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/api"],
-          "options": {
-            "jestConfig": "apps/api/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       }
     },
@@ -150,41 +142,6 @@
               "apps/munchkin/src/**/*.ts",
               "apps/munchkin/src/**/*.html"
             ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/munchkin"],
-          "options": {
-            "jestConfig": "apps/munchkin/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "munchkin-e2e": {
-      "root": "apps/munchkin-e2e",
-      "sourceRoot": "apps/munchkin-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/munchkin-e2e/cypress.json",
-            "devServerTarget": "munchkin:serve:development",
-            "tsConfig": "apps/munchkin-e2e/tsconfig.json"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "munchkin:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/munchkin-e2e/**/*.{js,ts}"]
           }
         }
       }
