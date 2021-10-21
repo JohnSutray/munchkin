@@ -1,4 +1,4 @@
-import { createAction } from './create-action';
+import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { MutatorActionHandler } from './mutator-action-handler';
 import { last } from 'lodash';
 import { Player } from 'libs/api-interfaces/src/lib/models';

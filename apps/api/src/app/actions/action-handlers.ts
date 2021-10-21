@@ -21,8 +21,14 @@ export const getActionType = (actionName: string): ActionTypeEnum => {
 
 export const registerMutationActionHandler = (
   key: string, handler: MutatorActionHandler,
-) => mutatorActionHandlers[key] = handler;
+) => {
+  console.log(`register mutator action: ${key}`);
+  return mutatorActionHandlers[key] = handler;
+};
 
 export const registerGeneratorActionHandler = (
   key: string, handler: GeneratorActionHandler,
-) => generatorActionHandlers[key] = handler;
+) => {
+  console.log(`register generator action: ${key}`);
+  return generatorActionHandlers[key] = handler;
+};

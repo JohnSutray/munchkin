@@ -14,5 +14,5 @@ export const startGameActionHandler: GeneratorActionHandler = game => [
     ],
   ),
 
-    createCheckSingleDiceWinnerAction(),
+  createCheckSingleDiceWinnerAction(),
 ];

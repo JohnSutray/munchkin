@@ -3,11 +3,13 @@ import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 import { generatorActionHandlers, getActionType, mutatorActionHandlers } from '../actions/action-handlers';
 import { cloneDeep, last } from 'lodash';
-import { createAction } from 'apps/api/src/app/actions/create-action';
-import { Game, GameAction, Player } from 'libs/api-interfaces/src/lib/models';
+import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { startGameAction } from 'libs/api-interfaces/src/lib/actions';
 import { doorsCollection, treasuresCollection } from 'libs/api-interfaces/src/lib/cards/cards-collection';
 import { ActionTypeEnum } from 'libs/api-interfaces/src/lib/enums/action-type.enum';
+import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { Game } from 'libs/api-interfaces/src/lib/models/game';
+import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
 
 
 export interface GameChange {
@@ -41,9 +43,9 @@ export class GameService {
 
   private readonly testInitialGameState: Game = {
     id: '1',
-    doors: doorsCollection.map(({ id }) => id),
+    doors: [...doorsCollection],
     doorsDrop: [],
-    treasures: treasuresCollection.map(({ id }) => id),
+    treasures: [...treasuresCollection],
     treasuresDrop: [],
     players: [
       this.testPlayer1,
@@ -55,12 +57,21 @@ export class GameService {
   };
 
   private readonly gamesSnapshots: { [key: string]: Game[] } = {
-    [this.testInitialGameState.id]: [this.testInitialGameState],
+    [this.testInitialGameState.id]: [],
   };
 
   private readonly games: { [key: string]: Game } = {
-    [this.testInitialGameState.id]: this.testInitialGameState,
+    [this.testInitialGameState.id]: cloneDeep(this.testInitialGameState),
   };
+
+  resetTestGameState(): void {
+    this.gamesSnapshots[this.testInitialGameState.id] = [];
+    this.games[this.testInitialGameState.id] = cloneDeep(this.testInitialGameState);
+    this.gameChanged$.next({
+      gameId: this.games[this.testInitialGameState.id].id,
+      difference: [this.games[this.testInitialGameState.id]],
+    });
+  }
 
   registerAction(id: string, action: GameAction): void {
     const game = this.games[id];
@@ -79,6 +90,8 @@ export class GameService {
     const actions = [action];
     const lastSnapShotsLength = this.findGameSnapshots(game.id).length;
 
+    console.log(action);
+
     while (actions.length) {
       action = actions.shift();
 
@@ -90,10 +103,10 @@ export class GameService {
 
       switch (getActionType(action.name)) {
         case ActionTypeEnum.MUTATOR:
-          game = mutatorActionHandlers[action.name](game);
+          game = mutatorActionHandlers[action.name](game, action.payload);
           break;
         case ActionTypeEnum.GENERATOR:
-          actions.unshift(...generatorActionHandlers[action.name](game));
+          actions.unshift(...generatorActionHandlers[action.name](game, action.payload));
           break;
       }
 

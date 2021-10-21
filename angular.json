@@ -176,6 +176,22 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@schematics/angular:component": {
+      "style": "scss",
+      "skipTests": true
+    },
+    "@schematics/angular:class": {
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "skipTests": true
+    },
+    "@schematics/angular:pipe": {
+      "skipTests": true
+    },
+    "@schematics/angular:service": {
+      "skipTests": true
     }
   },
   "defaultProject": "munchkin"

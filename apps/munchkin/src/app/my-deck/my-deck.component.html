@@ -1,0 +1,13 @@
+<div class="my-deck"
+     [id]="dndPointName"
+     [cdkDropListConnectedTo]="linkedDndPoints | async"
+     (cdkDropListDropped)="drop($event)"
+     cdkDropList
+     cdkDropListOrientation="horizontal">
+  <munchkin-card class="my-deck__card"
+                 cdkDrag
+                 munchkinCardMove
+                 [cardId]="card"
+                 *ngFor="let card of cards | async; trackBy: trackByValue">
+  </munchkin-card>
+</div>

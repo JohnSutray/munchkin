@@ -1,5 +1,5 @@
 import { Player } from 'libs/api-interfaces/src/lib/models';
-import { createAction } from 'apps/api/src/app/actions/create-action';
+import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { last, replace } from 'libs/api-interfaces/src/lib/utils/collection.utils';
 import { MutatorActionHandler } from 'apps/api/src/app/actions/mutator-action-handler';
 import { DialDoorPayload } from 'libs/api-interfaces/src/lib/actions';
