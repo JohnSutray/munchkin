@@ -36,11 +36,11 @@ export class CardMoveOverlayComponent extends SubscribingComponent {
         tap(this.unsetSmoothTransition),
         tap(this.showCard)
       ),
-      of(this.elementPositionToTranslation(task.to)).pipe(
-        delay(1),
-        tap(this.setSmoothTransition),
-        tap(this.hideCardAfterTransitionEnd)
-      ),
+      // of(this.elementPositionToTranslation(task.to)).pipe(
+      //   delay(1),
+      //   tap(this.setSmoothTransition),
+      //   tap(this.hideCardAfterTransitionEnd)
+      // ),
     );
   };
 

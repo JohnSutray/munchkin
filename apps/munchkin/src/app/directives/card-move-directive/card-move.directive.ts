@@ -4,6 +4,7 @@ import { merge, Observable, of } from 'rxjs';
 import { CardMoveOverlayService } from 'apps/munchkin/src/app/services/card-move-overlay.service';
 import { CardMovingTask } from 'apps/munchkin/src/app/models/card-moving-task.model';
 import { SubscribingComponent } from 'apps/munchkin/src/app/common/subscribing.component';
+import { cardMoveTransitionTime } from 'apps/munchkin/src/app/constants/animation.constants';
 
 interface MoveAnimation {
   readonly transform: string;
@@ -14,8 +15,7 @@ interface MoveAnimation {
   selector: '[munchkinCardMove]',
 })
 export class CardMoveDirective extends SubscribingComponent implements OnInit {
-  private readonly smoothTransitionTime = 350;
-  private readonly smoothTransition = `transform ${this.smoothTransitionTime}ms cubic-bezier(0, 0, 0.2, 1)`;
+  private readonly smoothTransition = `transform ${cardMoveTransitionTime}ms cubic-bezier(0, 0, 0.2, 1)`;
 
   @Input() cardId: string;
 
@@ -65,8 +65,8 @@ export class CardMoveDirective extends SubscribingComponent implements OnInit {
   private createTwoTranslationStates(task: CardMovingTask): Observable<MoveAnimation> {
     return merge(
       of(this.createStartMovingAnimation(task.from)),
-      of(this.createEndAnimation()).pipe(delay(1)),
-      of(this.createUnsetAnimation()).pipe(delay(this.smoothTransitionTime)),
+      of(this.createEndAnimation()).pipe(delay(10)),
+      of(this.createUnsetAnimation()).pipe(delay(cardMoveTransitionTime)),
     );
   };
 

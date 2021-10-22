@@ -1,10 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { DndLinksService } from 'apps/munchkin/src/app/services/dnd-links.service';
-import { CdkDrag, CdkDragDrop, CdkDragMove, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CardPlaceholderService } from 'apps/munchkin/src/app/services/card-placeholder.service';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
+import { SubscribingComponent } from 'apps/munchkin/src/app/common/subscribing.component';
 
 @Component({
   selector: 'munchkin-my-deck',
@@ -12,7 +13,7 @@ import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
   styleUrls: ['./my-deck.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyDeckComponent {
+export class MyDeckComponent extends SubscribingComponent implements OnInit {
   readonly dndPointName = DndLinksService.myDeckPoint;
   readonly linkedDndPoints = this.dndLinksService.linkedDndPoints;
   readonly cards = this.myDeckService.cards$;
@@ -23,6 +24,7 @@ export class MyDeckComponent {
     private readonly cardPlaceholderService: CardPlaceholderService,
     private readonly myDeckService: MyDeckService,
   ) {
+    super();
   }
 
   getCardVisibility(cardId: string): Observable<string> {
@@ -43,5 +45,9 @@ export class MyDeckComponent {
 
   drop(drop: CdkDragDrop<string>) {
     console.log(this.cards);
+  }
+
+  ngOnInit(): void {
+    this.myDeckService.startHandlingOfMyDeckActions(this.takeUntilDestroy);
   }
 }

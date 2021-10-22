@@ -1,19 +1,13 @@
-import { Player } from 'libs/api-interfaces/src/lib/models';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { last, replace } from 'libs/api-interfaces/src/lib/utils/collection.utils';
 import { MutatorActionHandler } from 'apps/api/src/app/actions/mutator-action-handler';
-import { DialDoorPayload } from 'libs/api-interfaces/src/lib/actions';
+import { DialCardPayload, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
+import { Player } from 'libs/api-interfaces/src/lib/models/player';
 
 
-export const dialTreasureAction = 'dialTreasureAction';
+export const createDialTreasureAction = (player: Player) => createAction<DialCardPayload>(dialTreasureAction, { playerId: player.id });
 
-export interface DialTreasurePayload {
-  readonly playerId: string;
-}
-
-export const createDialTreasureAction = (player: Player) => createAction<DialDoorPayload>(dialTreasureAction, { playerId: player.id });
-
-export const dialTreasureActionHandler: MutatorActionHandler<DialTreasurePayload> = (game, payload) => {
+export const dialTreasureActionHandler: MutatorActionHandler<DialCardPayload> = (game, payload) => {
   const door = last(game.treasures);
 
   return ({

@@ -4,7 +4,7 @@ import {
   checkSingleDiceWinnerActionHandler,
 } from 'apps/api/src/app/actions/check-single-dice-winner.action';
 import {
-  dialDoorAction,
+  dialDoorAction, dialTreasureAction,
   diceThrowAction,
   equipItemAction,
   selectFirstPlayer,
@@ -16,7 +16,6 @@ import {
   registerMutationActionHandler,
 } from 'apps/api/src/app/actions/action-handlers';
 import {
-  dialTreasureAction,
   dialTreasureActionHandler,
 } from 'apps/api/src/app/actions/dial-treasure.action';
 import { startGameActionHandler } from 'apps/api/src/app/actions/start-game.action';

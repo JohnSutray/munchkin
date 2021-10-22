@@ -14,7 +14,7 @@ export const createGameEventName = 'create';
 export const resetTestGameStateEventName = 'resetTestGameState';
 export const joinGameEventName = 'joinGame'
 
-export interface DialDoorPayload {
+export interface DialCardPayload {
   readonly playerId: string;
 }
 
@@ -31,4 +31,11 @@ export interface ActionMessage {
 
 export interface JoinGameMessage {
   readonly gameId: string;
+}
+
+export const dialTreasureAction = 'dialTreasureAction';
+
+export interface GameChange {
+  readonly gameId: string;
+  readonly difference: Game[];
 }

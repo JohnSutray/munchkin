@@ -1,8 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   actionEventName,
   ActionMessage,
-  gameUpdate,
   joinGameEventName,
   JoinGameMessage,
   resetTestGameStateEventName,
@@ -12,9 +11,10 @@ import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action'
 import { Socket } from 'ngx-socket-io';
 import { DndLinksService } from 'apps/munchkin/src/app/services/dnd-links.service';
 import { CardMoveOverlayService } from 'apps/munchkin/src/app/services/card-move-overlay.service';
-import { doorsId, myDeckId } from 'apps/munchkin/src/app/constants/workspace.constants';
 import { CardPlaceholderService } from 'apps/munchkin/src/app/services/card-placeholder.service';
 import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
+import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
+import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 
 @Component({
   selector: 'munchkin-root',
@@ -26,46 +26,42 @@ import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
     CardMoveOverlayService,
     CardPlaceholderService,
     MyDeckService,
+    GameIterationService,
+    PlayerDataService,
   ],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   constructor(
     private readonly socket: Socket,
     private readonly cardMoveOverlayService: CardMoveOverlayService,
     private readonly cardPlaceholderService: CardPlaceholderService,
     private readonly myDeckService: MyDeckService,
+    private readonly gameIterationService: GameIterationService,
+    private readonly playerDataService: PlayerDataService,
   ) {
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-
-      this.cardPlaceholderService.setPlaceholderCard('5')
-      this.cardMoveOverlayService.startCardMoving({
-        cardId: '5',
-        from: doorsId,
-        to: ''
-      });
-    });
-    setTimeout(() => {
-      this.myDeckService.setCards(['1', '2', '3', '4', '5', '6']);
-    }, 2000)
+  private get joinGameMessage(): JoinGameMessage {
+    return { gameId: '1' };
   }
 
   ngOnInit(): void {
+    this.playerDataService.setPlayerId('1');
     this.socket.fromEvent('connect_error').subscribe(console.error);
-    this.socket.fromEvent(gameUpdate).subscribe(console.log);
-
-    this.socket.fromEvent('connect').subscribe(() => {
-      // this.socket.emit(joinGameEventName, { gameId: '1' } as JoinGameMessage);
-      // this.socket.emit(actionEventName, {
-      //   gameId: '1',
-      //   action: createAction(startGameAction),
-      // } as ActionMessage);
-    });
+    this.socket.fromEvent('connect').subscribe(this.initializeClient);
   }
 
   resetGameState(): void {
     this.socket.emit(resetTestGameStateEventName);
+  }
+
+  private initializeClient = () => {
+    this.socket.emit(joinGameEventName, this.joinGameMessage);
+    this.socket.emit(resetTestGameStateEventName)
+    this.gameIterationService.subscribeToUpdates();
+    this.socket.emit(actionEventName, {
+      gameId: '1',
+      action: createAction(startGameAction),
+    } as ActionMessage);
   }
 }

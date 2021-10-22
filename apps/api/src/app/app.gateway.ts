@@ -7,9 +7,9 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
-import { GameChange, GameService } from 'apps/api/src/app/services/game.service';
+import { GameService } from 'apps/api/src/app/services/game.service';
 import {
-  actionEventName, ActionMessage,
+  actionEventName, ActionMessage, GameChange,
   gameUpdate,
   joinGameEventName, JoinGameMessage,
   resetTestGameStateEventName,

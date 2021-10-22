@@ -7,6 +7,7 @@
   <munchkin-card class="my-deck__card"
                  cdkDrag
                  munchkinCardMove
+
                  [cardId]="card"
                  *ngFor="let card of cards | async; trackBy: trackByValue">
   </munchkin-card>

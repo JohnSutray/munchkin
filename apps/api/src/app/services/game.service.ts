@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { generatorActionHandlers, getActionType, mutatorActionHandlers } from '../actions/action-handlers';
 import { cloneDeep, last } from 'lodash';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
-import { startGameAction } from 'libs/api-interfaces/src/lib/actions';
+import { GameChange, startGameAction } from 'libs/api-interfaces/src/lib/actions';
 import { doorsCollection, treasuresCollection } from 'libs/api-interfaces/src/lib/cards/cards-collection';
 import { ActionTypeEnum } from 'libs/api-interfaces/src/lib/enums/action-type.enum';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
@@ -12,17 +12,12 @@ import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
 
 
-export interface GameChange {
-  readonly gameId: string;
-  readonly difference: Game[];
-}
-
 @Injectable()
 export class GameService {
   private readonly gameChanged$ = new Subject<GameChange>();
 
   readonly testPlayer1: Player = {
-    id: 'test-player-1',
+    id: '1',
     cards: [],
     level: 1,
     races: [],
@@ -32,7 +27,7 @@ export class GameService {
   };
 
   readonly testPlayer2: Player = {
-    id: 'test-player-1',
+    id: '2',
     cards: [],
     level: 1,
     races: [],
@@ -49,7 +44,7 @@ export class GameService {
     treasuresDrop: [],
     players: [
       this.testPlayer1,
-      this.testPlayer2,
+      // this.testPlayer2,
     ],
     completedActions: [],
     firstPlayer: '',
