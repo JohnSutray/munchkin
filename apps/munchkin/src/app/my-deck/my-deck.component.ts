@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { DndLinksService } from 'apps/munchkin/src/app/services/dnd-links.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CardPlaceholderService } from 'apps/munchkin/src/app/services/card-placeholder.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
 import { SubscribingComponent } from 'apps/munchkin/src/app/common/subscribing.component';
+import { myDeckId } from 'apps/munchkin/src/app/constants/workspace.constants';
+
+export interface CardDropData {
+  readonly cardId: string;
+  readonly source: string;
+}
 
 @Component({
   selector: 'munchkin-my-deck',
@@ -18,7 +22,6 @@ export class MyDeckComponent extends SubscribingComponent implements OnInit {
   readonly linkedDndPoints = this.dndLinksService.linkedDndPoints;
   readonly cards = this.myDeckService.cards$;
 
-
   constructor(
     private readonly dndLinksService: DndLinksService,
     private readonly cardPlaceholderService: CardPlaceholderService,
@@ -27,27 +30,29 @@ export class MyDeckComponent extends SubscribingComponent implements OnInit {
     super();
   }
 
-  getCardVisibility(cardId: string): Observable<string> {
-    return this.cardPlaceholderService.placeholderCard.pipe(
-      map(placeholderId => this.toVisibility(placeholderId, cardId))
-    )
-  }
-
-  toVisibility(placeholderId: string, cardId: string): string {
-    return placeholderId === cardId
-      ? 'hidden'
-      : 'visible';
-  }
-
   trackByValue(index: number, value: string): string {
     return value;
   }
 
-  drop(drop: CdkDragDrop<string>) {
-    console.log(this.cards);
+  getDropData(cardId: string): CardDropData {
+    return { cardId, source: myDeckId };
   }
 
   ngOnInit(): void {
     this.myDeckService.startHandlingOfMyDeckActions(this.takeUntilDestroy);
+  }
+
+  processDrop(
+    {
+      item: { data: { source } }, previousIndex, currentIndex,
+    }: CdkDragDrop<CardDropData, CardDropData, CardDropData>,
+  ) {
+    if (source === myDeckId) {
+      const cardsAfterReplacements = [...this.myDeckService.cards];
+
+      moveItemInArray(cardsAfterReplacements, previousIndex, currentIndex);
+
+      this.myDeckService.setCards(cardsAfterReplacements);
+    }
   }
 }

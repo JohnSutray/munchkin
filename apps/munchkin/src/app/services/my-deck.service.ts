@@ -43,10 +43,18 @@ export class MyDeckService {
 
   readonly cards$ = this._cards$.asObservable();
 
+  get cards(): string[] {
+    return this._cards$.value;
+  }
+
   startHandlingOfMyDeckActions(takeUntil: MonoTypeOperatorFunction<Game>): void {
     this.cardDialUpdates$.pipe(
       map(this.animateGetCardFromDeck),
     ).subscribe(this.gameIterationService.registerTask);
+  }
+
+  setCards(cards: string[]): void {
+    this._cards$.next(cards);
   }
 
   private animateGetCardFromDeck = (update: Game): Observable<any> => {
@@ -68,10 +76,7 @@ export class MyDeckService {
     return update.currentAction.payload.playerId === this.playerDataService.player.id;
   }
 
-  private appendCard = ({ cardId }: CardDialData) => {
-    // console.log(cardId);
-    this._cards$.next([...this._cards$.value, cardId]);
-  };
+  private appendCard = ({ cardId }: CardDialData) => this._cards$.next([...this._cards$.value, cardId]);
 
   private startCardMovingAnimation = (
     { cardId, deckId }: CardDialData,

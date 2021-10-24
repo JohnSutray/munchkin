@@ -5,10 +5,6 @@ export interface Player {
   readonly races: string[];
   readonly classes: string[];
   readonly lastDiceValue: number;
-  // readonly head?: string;
-  // readonly boots?: string;
-  // readonly body?: string;
-  // readonly firstHand?: string;
-  // readonly secondHand?: string;
+
   readonly items: string[];
 }

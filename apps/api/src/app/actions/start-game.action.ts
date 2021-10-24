@@ -2,17 +2,22 @@ import { createCheckSingleDiceWinnerAction } from 'apps/api/src/app/actions/chec
 import { createDialDoorAction } from 'apps/api/src/app/actions/dial-door.action';
 import { GeneratorActionHandler } from 'apps/api/src/app/actions/generator-action-handler';
 import { flatMap } from 'lodash';
+import { createDialTreasureAction } from 'apps/api/src/app/actions/dial-treasure.action';
 
 
 export const startGameActionHandler: GeneratorActionHandler = game => [
   ...flatMap(
     game.players,
     player => [
-      createDialDoorAction(player),
-      createDialDoorAction(player),
-      createDialDoorAction(player),
-      createDialDoorAction(player),
-      createDialDoorAction(player),
+      // createDialDoorAction(player),
+      // createDialDoorAction(player),
+      // createDialDoorAction(player),
+      // createDialDoorAction(player),
+      // createDialDoorAction(player),
+      createDialTreasureAction(player),
+      createDialTreasureAction(player),
+      createDialTreasureAction(player),
+      createDialTreasureAction(player),
       // createDialTreasureAction(player),
     ],
   ),

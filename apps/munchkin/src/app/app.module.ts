@@ -7,6 +7,7 @@ import { CardMoveOverlayModule } from 'apps/munchkin/src/app/card-move-overlay/c
 import { OpponentWorkspaceModule } from 'apps/munchkin/src/app/opponent-workspace/opponent-workspace.module';
 import { CardPacksModule } from 'apps/munchkin/src/app/card-packs/card-packs.module';
 import { EventPluginsModule } from '@tinkoff/ng-event-plugins';
+import { EquipmentModule } from 'apps/munchkin/src/app/equipment/equipment.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { EventPluginsModule } from '@tinkoff/ng-event-plugins';
     CardMoveOverlayModule,
     OpponentWorkspaceModule,
     CardPacksModule,
+    EquipmentModule,
   ],
   bootstrap: [AppComponent],
 })
