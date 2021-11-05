@@ -26,6 +26,12 @@
 
 .workspace__bottom {
   height: 33%;
+  display: flex;
+  flex-direction: row;
+}
+
+.workspace__bottom-my-deck {
+  flex-grow: 1;
 }
 
 .workspace__mid {

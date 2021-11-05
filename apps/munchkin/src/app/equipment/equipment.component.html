@@ -1,9 +1,7 @@
-<div >
-  <div [id]="equipmentId"
-       cdkDropList
-       class="equipment__empty-item">
-
-  </div>
-
-    <munchkin-card *ngIf="" [cardId]=""></munchkin-card>
+<div class="equipment__head-row">
+  <munchkin-equipment-item [item$]="headId$"></munchkin-equipment-item>
+  <munchkin-equipment-item [item$]="leftHandId$"></munchkin-equipment-item>
+  <munchkin-equipment-item [item$]="bodyId$"></munchkin-equipment-item>
+  <munchkin-equipment-item [item$]="rightHandId$"></munchkin-equipment-item>
+  <munchkin-equipment-item [item$]="bootsId$"></munchkin-equipment-item>
 </div>

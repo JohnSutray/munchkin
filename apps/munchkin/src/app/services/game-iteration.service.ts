@@ -14,7 +14,7 @@ export class GameIterationService {
   private readonly allUpdates: Game[] = [];
   private readonly _currentUpdate$ = new BehaviorSubject<Game>(null);
 
-  readonly currentUpdate$ = this._currentUpdate$.asObservable().pipe(filter<Game>(Boolean));
+  readonly currentGame$ = this._currentUpdate$.asObservable().pipe(filter<Game>(Boolean));
 
   get game(): Game {
     return this._currentUpdate$.value;
@@ -26,7 +26,7 @@ export class GameIterationService {
   }
 
   updatesOfType$(type: string): Observable<Game> {
-    return this.currentUpdate$.pipe(
+    return this.currentGame$.pipe(
       filter(update => update.currentAction.name === type),
     );
   }
@@ -37,7 +37,7 @@ export class GameIterationService {
     this.socket.fromEvent<GameChange>(gameUpdate)
       .pipe(map(update => update.difference))
       .subscribe(this.setSnapshots);
-    this.currentUpdate$.pipe(
+    this.currentGame$.pipe(
       delay(1),
       switchMap(this.awaitAllUpdates),
     ).subscribe(this.processUpdate);
@@ -45,7 +45,7 @@ export class GameIterationService {
 
   private setSnapshots = (updates: Game[]): void => {
     this.allUpdates.push(...updates);
-    if (false) {
+    if (true) {
       const label = `Update pack ${index++}`;
       console.group(label);
       updates.forEach(u => console.log(u));

@@ -78,7 +78,10 @@
               "apps/munchkin/src/favicon.ico",
               "apps/munchkin/src/assets"
             ],
-            "styles": ["apps/munchkin/src/styles.scss"],
+            "styles": [
+              "apps/munchkin/src/styles.scss",
+              "apps/munchkin/src/variables.scss"
+            ],
             "scripts": []
           },
           "configurations": {

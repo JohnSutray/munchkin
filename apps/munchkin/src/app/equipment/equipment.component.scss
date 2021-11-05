@@ -1,9 +1,16 @@
-.equipment__empty-item {
-  border-radius: 10px;
-  border-style: dashed;
-  border-width: 2px;
-  background-color: #b3b3b3;
+.equipment__head-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-  width: 100px;
-  height: 150px;
+.equipment__body-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.equipment__boots-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

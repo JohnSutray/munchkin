@@ -1,0 +1,9 @@
+<div>
+  <div [id]="equipmentId"
+       cdkDropList
+       (cdkDropListDropped)="handleDrop($event)"
+       class="equipment__empty-item">
+    <munchkin-card *ngIf="item$ | async"
+                   [cardId]="item$ | async"></munchkin-card>
+  </div>
+</div>

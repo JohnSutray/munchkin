@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EquipmentComponent } from './equipment.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { CardModule } from 'apps/munchkin/src/app/card/card.module';
+import { EquipmentItemModule } from 'apps/munchkin/src/app/equipment/equipment-item/equipment-item.module';
 
 
 
@@ -15,8 +14,7 @@ import { CardModule } from 'apps/munchkin/src/app/card/card.module';
   ],
   imports: [
     CommonModule,
-    DragDropModule,
-    CardModule,
+    EquipmentItemModule,
   ],
 })
 export class EquipmentModule { }
