@@ -1,8 +1,7 @@
 import { createCheckSingleDiceWinnerAction } from 'apps/api/src/app/actions/check-single-dice-winner.action';
-import { createDialDoorAction } from 'apps/api/src/app/actions/dial-door.action';
 import { GeneratorActionHandler } from 'apps/api/src/app/actions/generator-action-handler';
-import { flatMap } from 'lodash';
 import { createDialTreasureAction } from 'apps/api/src/app/actions/dial-treasure.action';
+import { flatMap } from 'lodash-es';
 
 
 export const startGameActionHandler: GeneratorActionHandler = game => [

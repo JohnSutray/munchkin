@@ -79,8 +79,7 @@
               "apps/munchkin/src/assets"
             ],
             "styles": [
-              "apps/munchkin/src/styles.scss",
-              "apps/munchkin/src/variables.scss"
+              "apps/munchkin/src/styles.scss"
             ],
             "scripts": []
           },

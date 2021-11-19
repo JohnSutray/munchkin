@@ -25,6 +25,8 @@ import { ActionService } from 'apps/munchkin/src/app/services/action.service';
   ],
 })
 export class AppComponent implements OnInit {
+  readonly game$ = this.gameIterationService.game$;
+
   constructor(
     private readonly gameIterationService: GameIterationService,
     private readonly playerDataService: PlayerDataService,

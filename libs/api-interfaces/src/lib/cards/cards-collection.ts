@@ -60,6 +60,33 @@ export const twoHandItems = [
   bowWithRibbonsTreasureId,
 ];
 
+export enum EItem {
+  HEAD = 'head',
+  BODY = 'body',
+  HAND = 'hand',
+  BOOTS = 'boots',
+}
+
+export const allItemTypes: string[] = [
+  EItem.HAND,
+  EItem.HEAD,
+  EItem.BODY,
+  EItem.BOOTS,
+];
+
+export const isItemType = (value: string): value is EItem =>
+  allItemTypes.includes(value);
+
+export const getItemType = (itemId: string): EItem => {
+  if (isHead(itemId)) return EItem.HEAD;
+  if (isBody(itemId)) return EItem.BODY;
+  if (isHand(itemId)) return EItem.HAND;
+  if (isBoots(itemId)) return EItem.BOOTS;
+
+  debugger;
+  throw new Error(`Unknown item type! Item id: ${itemId}`);
+};
+
 export const isHead = (item: string) => headEquipment.includes(item);
 export const isBody = (item: string) => bodyEquipment.includes(item);
 export const isHand = (item: string) => handEquipment.includes(item);

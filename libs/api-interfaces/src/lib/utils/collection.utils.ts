@@ -1,4 +1,4 @@
-import { isMatch } from 'lodash';
+import { isMatch } from 'lodash-es';
 
 export const replace = <T>(
   items: T[],
@@ -12,6 +12,10 @@ export const replace = <T>(
   return items.map(item => matcher(item) ? replacer(item) : item);
 };
 
-export const without = <T>(items: T[], item: T): T[] => items.filter(i => i !== item);
+export const insertItem = <T>(list: T[], item: T, atIndex: number): T[] => {
+  const newList = [...list];
 
-export const last = <T>(items: T[]): T => items[items.length - 1];
+  newList.splice(atIndex, 0, item);
+
+  return newList;
+};

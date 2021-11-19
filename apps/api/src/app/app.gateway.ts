@@ -6,16 +6,17 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { GameService } from 'apps/api/src/app/services/game.service';
 import {
-  actionEventName, ActionMessage, GameChange,
+  actionEventName,
+  ActionMessage,
+  GameChange,
   gameUpdate,
-  joinGameEventName, JoinGameMessage,
+  joinGameEventName,
+  JoinGameMessage,
   resetTestGameStateEventName,
 } from 'libs/api-interfaces/src/lib/actions';
-import { tap } from 'rxjs/operators';
-import { Socket } from 'socket.io';
 
 @WebSocketGateway(3333)
 export class AppGateway implements OnGatewayInit {
@@ -49,7 +50,6 @@ export class AppGateway implements OnGatewayInit {
 
   afterInit(): any {
     this.gameService.onGameChange$('1')
-      .pipe<GameChange>(tap(console.log))
       .subscribe(this.emitGameChange);
   }
 

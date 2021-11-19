@@ -1,9 +1,9 @@
-import { random } from 'lodash';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { replace } from 'libs/api-interfaces/src/lib/utils/collection.utils';
 import { MutatorActionHandler } from 'apps/api/src/app/actions/mutator-action-handler';
 import { diceThrowAction } from 'libs/api-interfaces/src/lib/actions';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { random } from 'lodash-es';
 
 
 export interface DiceThrowPayload {

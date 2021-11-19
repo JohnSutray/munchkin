@@ -6,11 +6,12 @@ import { CardMoveOverlayService } from 'apps/munchkin/src/app/services/card-move
 import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { afterNextViewInit } from 'apps/munchkin/src/app/utils/angular.utils';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
-import { dialDoorAction, DialCardPayload, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
+import { DialCardPayload, dialDoorAction, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
-import { last } from 'libs/api-interfaces/src/lib/utils/collection.utils';
 import { cardMoveTransitionTime } from 'apps/munchkin/src/app/constants/animation.constants';
+import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { last, without } from 'lodash-es';
 
 interface CardDialData {
   readonly cardId: string;
@@ -33,6 +34,12 @@ export class MyDeckService {
     [dialTreasureAction]: treasuresId,
   };
 
+  readonly cards$ = this._cards$.asObservable();
+
+  get cards(): string[] {
+    return this._cards$.value;
+  }
+
   constructor(
     private readonly cardPlaceholderService: CardPlaceholderService,
     private readonly cardMoveOverlayService: CardMoveOverlayService,
@@ -41,26 +48,31 @@ export class MyDeckService {
   ) {
   }
 
-  readonly cards$ = this._cards$.asObservable();
-
-  get cards(): string[] {
-    return this._cards$.value;
-  }
-
   startHandlingOfMyDeckActions(takeUntil: MonoTypeOperatorFunction<Game>): void {
     this.cardDialUpdates$.pipe(
+      takeUntil,
       map(this.animateGetCardFromDeck),
     ).subscribe(this.gameIterationService.registerTask);
+  }
+
+  observeCards(takeUntil: MonoTypeOperatorFunction<Player>): void {
+    this.playerDataService.player$.pipe(
+      takeUntil,
+      map(({ cards }) => cards)
+    ).subscribe(this._cards$);
   }
 
   setCards(cards: string[]): void {
     this._cards$.next(cards);
   }
 
+  removeCardLocally(cardId: string): void {
+    this.setCards(without(this.cards, cardId));
+  }
+
   private animateGetCardFromDeck = (update: Game): Observable<any> => {
     return of(update).pipe(
       map(this.toCardDialData),
-      tap(this.appendCard),
       switchMap(afterNextViewInit),
       tap(this.startCardMovingAnimation),
       delay(cardMoveTransitionTime),
@@ -75,8 +87,6 @@ export class MyDeckService {
   private onlyForCurrentPlayer(update: Game<DialCardPayload>): boolean {
     return update.currentAction.payload.playerId === this.playerDataService.player.id;
   }
-
-  private appendCard = ({ cardId }: CardDialData) => this._cards$.next([...this._cards$.value, cardId]);
 
   private startCardMovingAnimation = (
     { cardId, deckId }: CardDialData,

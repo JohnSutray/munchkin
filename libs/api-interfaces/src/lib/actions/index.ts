@@ -3,6 +3,8 @@ import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
 
 export const startGameAction = 'start-game-action';
 export const equipItemAction = 'equipItemAction';
+export const unequipItemAction = 'unequipItemAction';
+export const moveCardAction = 'moveCardAction';
 export const startStagingAction = 'startStagingAction';
 export const selectFirstPlayer = 'selectFirstPlayer';
 export const diceThrowAction = 'diceThrowAction';

@@ -6,10 +6,10 @@ import {
 import {
   dialDoorAction, dialTreasureAction,
   diceThrowAction,
-  equipItemAction,
+  equipItemAction, moveCardAction,
   selectFirstPlayer,
   startGameAction,
-  startStagingAction,
+  startStagingAction, unequipItemAction,
 } from 'libs/api-interfaces/src/lib/actions';
 import {
   registerGeneratorActionHandler,
@@ -23,6 +23,8 @@ import { equipItemActionHandler } from 'apps/api/src/app/actions/equip-item.acti
 import { diceThrowActionHandler } from 'apps/api/src/app/actions/dice-throw.action';
 import { selectFirstPlayerActionHandler } from 'apps/api/src/app/actions/select-first-player.action';
 import { dialDoorActionHandler } from 'apps/api/src/app/actions/dial-door.action';
+import { unequipItemActionHandler } from 'apps/api/src/app/actions/unequip-item.action';
+import { moveCardActionHandler } from 'apps/api/src/app/actions/move-card.action';
 
 
 export const initializeActions = () => {
@@ -34,4 +36,6 @@ export const initializeActions = () => {
   registerGeneratorActionHandler(startGameAction, startGameActionHandler);
   registerGeneratorActionHandler(startStagingAction, startStagingActionHandler);
   registerMutationActionHandler(equipItemAction, equipItemActionHandler);
+  registerMutationActionHandler(unequipItemAction, unequipItemActionHandler)
+  registerMutationActionHandler(moveCardAction, moveCardActionHandler);
 };

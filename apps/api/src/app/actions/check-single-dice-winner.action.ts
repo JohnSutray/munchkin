@@ -3,8 +3,8 @@ import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action'
 import { createDiceThrowAction } from 'apps/api/src/app/actions/dice-throw.action';
 import { startStagingAction } from 'libs/api-interfaces/src/lib/actions';
 import { GeneratorActionHandler } from 'apps/api/src/app/actions/generator-action-handler';
-import { filter, maxBy } from 'lodash';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { filter, maxBy } from 'lodash-es';
 
 
 export const checkSingleDiceWinnerAction = 'checkSingleDiceWinnerAction';

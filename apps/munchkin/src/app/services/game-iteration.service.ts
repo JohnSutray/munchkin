@@ -9,15 +9,15 @@ let index = 1;
 
 @Injectable()
 export class GameIterationService {
-  private updatesProcessing: boolean = false;
+  private snapshotsProcessing: boolean = false;
   private currentTasks: Observable<any>[] = [];
-  private readonly allUpdates: Game[] = [];
-  private readonly _currentUpdate$ = new BehaviorSubject<Game>(null);
+  private readonly gameSnapshots: Game[] = [];
+  private readonly _game$ = new BehaviorSubject<Game>(null);
 
-  readonly currentGame$ = this._currentUpdate$.asObservable().pipe(filter<Game>(Boolean));
+  readonly game$ = this._game$.asObservable().pipe(filter<Game>(Boolean));
 
   get game(): Game {
-    return this._currentUpdate$.value;
+    return this._game$.value;
   }
 
   constructor(
@@ -26,7 +26,7 @@ export class GameIterationService {
   }
 
   updatesOfType$(type: string): Observable<Game> {
-    return this.currentGame$.pipe(
+    return this.game$.pipe(
       filter(update => update.currentAction.name === type),
     );
   }
@@ -37,22 +37,22 @@ export class GameIterationService {
     this.socket.fromEvent<GameChange>(gameUpdate)
       .pipe(map(update => update.difference))
       .subscribe(this.setSnapshots);
-    this.currentGame$.pipe(
+    this.game$.pipe(
       delay(1),
       switchMap(this.awaitAllUpdates),
     ).subscribe(this.processUpdate);
   }
 
   private setSnapshots = (updates: Game[]): void => {
-    this.allUpdates.push(...updates);
+    this.gameSnapshots.push(...updates);
     if (true) {
       const label = `Update pack ${index++}`;
-      console.group(label);
+      console.groupCollapsed(label);
       updates.forEach(u => console.log(u));
       console.groupEnd();
     }
 
-    if (!this.updatesProcessing) {
+    if (!this.snapshotsProcessing) {
       this.processUpdate();
     }
   };
@@ -68,12 +68,12 @@ export class GameIterationService {
   };
 
   private processUpdate = (): void => {
-    if (this.allUpdates.length) {
-      this.updatesProcessing = true;
+    if (this.gameSnapshots.length) {
+      this.snapshotsProcessing = true;
       this.resetTasks();
-      this._currentUpdate$.next(this.allUpdates.shift());
+      this._game$.next(this.gameSnapshots.shift());
     } else {
-      this.updatesProcessing = false;
+      this.snapshotsProcessing = false;
     }
   };
 }

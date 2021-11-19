@@ -1,8 +1,9 @@
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
-import { last, replace } from 'libs/api-interfaces/src/lib/utils/collection.utils';
+import { replace } from 'libs/api-interfaces/src/lib/utils/collection.utils';
 import { MutatorActionHandler } from 'apps/api/src/app/actions/mutator-action-handler';
 import { DialCardPayload, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { last } from 'lodash-es';
 
 
 export const createDialTreasureAction = (player: Player) => createAction<DialCardPayload>(dialTreasureAction, { playerId: player.id });

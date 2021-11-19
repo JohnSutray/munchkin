@@ -1,6 +1,6 @@
 <div class="my-deck"
      [id]="dndPointName"
-     [cdkDropListConnectedTo]="linkedDndPoints | async"
+     [cdkDropListConnectedTo]="linkedDndPoints$ | async"
      (cdkDropListDropped)="processDrop($event)"
      cdkDropList
      cdkDropListOrientation="horizontal">
@@ -9,6 +9,6 @@
                  munchkinCardMove
                  [cdkDragData]="getDropData(cardId)"
                  [cardId]="cardId"
-                 *ngFor="let cardId of cards | async; trackBy: trackByValue">
+                 *ngFor="let cardId of cards$ | async; trackBy: trackByValue">
   </munchkin-card>
 </div>

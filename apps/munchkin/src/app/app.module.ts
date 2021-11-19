@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { MyDeckModule } from 'apps/munchkin/src/app/my-deck/my-deck.module';
-import { CardMoveOverlayModule } from 'apps/munchkin/src/app/card-move-overlay/card-move-overlay.module';
 import { OpponentWorkspaceModule } from 'apps/munchkin/src/app/opponent-workspace/opponent-workspace.module';
 import { CardPacksModule } from 'apps/munchkin/src/app/card-packs/card-packs.module';
 import { EventPluginsModule } from '@tinkoff/ng-event-plugins';
@@ -20,7 +19,6 @@ import { EquipmentModule } from 'apps/munchkin/src/app/equipment/equipment.modul
     EventPluginsModule,
 
     MyDeckModule,
-    CardMoveOverlayModule,
     OpponentWorkspaceModule,
     CardPacksModule,
     EquipmentItemModule,

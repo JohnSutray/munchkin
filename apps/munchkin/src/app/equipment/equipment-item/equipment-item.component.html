@@ -1,9 +1,12 @@
 <div>
-  <div [id]="equipmentId"
+  <div [id]="equipmentType"
        cdkDropList
+       [cdkDropListConnectedTo]="linkedDndPoints$ | async"
        (cdkDropListDropped)="handleDrop($event)"
        class="equipment__empty-item">
     <munchkin-card *ngIf="item$ | async"
+                   cdkDrag
+                   [cdkDragData]="dropData$ | async"
                    [cardId]="item$ | async"></munchkin-card>
   </div>
 </div>

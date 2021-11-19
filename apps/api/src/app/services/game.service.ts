@@ -2,7 +2,6 @@ import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 import { generatorActionHandlers, getActionType, mutatorActionHandlers } from '../actions/action-handlers';
-import { cloneDeep, last } from 'lodash';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { GameChange, startGameAction } from 'libs/api-interfaces/src/lib/actions';
 import { doorsCollection, treasuresCollection } from 'libs/api-interfaces/src/lib/cards/cards-collection';
@@ -10,6 +9,7 @@ import { ActionTypeEnum } from 'libs/api-interfaces/src/lib/enums/action-type.en
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
+import { cloneDeep, last } from 'lodash-es';
 
 
 @Injectable()
@@ -84,8 +84,6 @@ export class GameService {
   private performActions(game: Game, action: GameAction): Game[] {
     const actions = [action];
     const lastSnapShotsLength = this.findGameSnapshots(game.id).length;
-
-    console.log(action);
 
     while (actions.length) {
       action = actions.shift();

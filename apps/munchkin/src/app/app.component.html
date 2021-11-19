@@ -1,6 +1,4 @@
-<!--<munchkin-card-move-overlay></munchkin-card-move-overlay>-->
-
-<div class="workspace">
+<div class="workspace" *ngIf="game$ | async">
   <div class="workspace__top">
     <munchkin-opponent-workspace></munchkin-opponent-workspace>
     <munchkin-opponent-workspace></munchkin-opponent-workspace>

@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { equipmentId } from 'apps/munchkin/src/app/constants/workspace.constants';
+import { BehaviorSubject } from 'rxjs';
+import { myDeckId } from 'apps/munchkin/src/app/constants/workspace.constants';
+import { allItemTypes } from 'libs/api-interfaces/src/lib/cards/cards-collection';
 
 @Injectable()
 export class DndLinksService {
-  static readonly myDeckPoint = 'myDeckPoint';
-  // static readonly myDeckPoint = 'myDeckPoint';
-
-  private readonly _linkedDndPoints = new BehaviorSubject<string[]>([
-    equipmentId,
+  private readonly _linkedDndPoints$ = new BehaviorSubject<string[]>([
+    myDeckId,
+    ...allItemTypes,
   ]);
 
-  get linkedDndPoints(): Observable<string[]> {
-    return this._linkedDndPoints.asObservable();
-  }
+  readonly linkedDndPoints$ = this._linkedDndPoints$.asObservable()
 }

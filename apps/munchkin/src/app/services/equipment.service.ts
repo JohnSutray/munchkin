@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 import { isBody, isBoots, isHand, isHead } from 'libs/api-interfaces/src/lib/cards/cards-collection';
-import { map, switchMap, switchMapTo } from 'rxjs/operators';
+import { map, switchMapTo } from 'rxjs/operators';
+import { BehaviorSubject, MonoTypeOperatorFunction } from 'rxjs';
+import { Player } from 'libs/api-interfaces/src/lib/models/player';
+import { without } from 'lodash-es';
 
 @Injectable()
 export class EquipmentService {
+  private readonly _items$ = new BehaviorSubject<string[]>([]);
+
   constructor(
     private readonly gameIterationService: GameIterationService,
     private readonly playerDataService: PlayerDataService,
   ) {
   }
 
-  readonly items$ = this.playerDataService.player$.pipe(
-    map(player => player.items),
-  );
+  readonly items$ = this._items$.asObservable();
 
   readonly headId$ = this.items$.pipe(
     map(items => items.find(isHead)),
@@ -31,6 +34,17 @@ export class EquipmentService {
   readonly leftHandId$ = this.items$.pipe(
     map(items => items.find(isHand)),
   );
+
+  startItemsObserve(takeUntil: MonoTypeOperatorFunction<Player>): void {
+    this.playerDataService.player$.pipe(
+      takeUntil,
+      map(({ items }) => items),
+    ).subscribe(this._items$);
+  }
+
+  removeItemLocally(itemId: string): void {
+    this._items$.next(without(this._items$.value, itemId));
+  }
 
   private findRightHand = (leftHand: string) => this.playerDataService.player.items
     .find(item => isHand(item) && item !== leftHand);

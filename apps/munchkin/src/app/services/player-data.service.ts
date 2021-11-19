@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
-import { find } from 'lodash';
 import { map } from 'rxjs/operators';
+import { find } from 'lodash-es';
 
 @Injectable()
 export class PlayerDataService {
@@ -13,7 +13,7 @@ export class PlayerDataService {
   ) {
   }
 
-  readonly player$ = this.gameIterationService.currentGame$.pipe(
+  readonly player$ = this.gameIterationService.game$.pipe(
     map(() => this.player),
   );
 

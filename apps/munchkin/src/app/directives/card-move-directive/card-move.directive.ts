@@ -65,7 +65,7 @@ export class CardMoveDirective extends SubscribingComponent implements OnInit {
   private createTwoTranslationStates(task: CardMovingTask): Observable<MoveAnimation> {
     return merge(
       of(this.createStartMovingAnimation(task.from)),
-      of(this.createEndAnimation()).pipe(delay(10)),
+      of(this.createEndAnimation()).pipe(delay(50)),
       of(this.createUnsetAnimation()).pipe(delay(cardMoveTransitionTime)),
     );
   };
