@@ -3,16 +3,17 @@ import { Socket } from 'ngx-socket-io';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 import {
   actionEventName,
-  ActionMessage,
+  ActionMessage, approveStagingReadyStateAction, breakDoorAction,
   equipItemAction,
-  joinGameEventName, JoinGameMessage, moveCardAction, resetTestGameStateEventName,
+  joinGameEventName, JoinGameMessage, moveCardAction, resetTestGameStateEventName, setPlayerReadyStateAction,
   startGameAction, unequipItemAction,
 } from 'libs/api-interfaces/src/lib/actions';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
-import { EquipItemPayload } from 'apps/api/src/app/actions/equip-item.action';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
-import { UnequipItemPayload } from 'apps/api/src/app/actions/unequip-item.action';
-import { MoveCardPayload } from 'apps/api/src/app/actions/move-card.action';
+import { MoveCardPayload } from 'libs/api-interfaces/src/lib/actions/payloads/move-card.payload';
+import { EquipItemPayload } from 'libs/api-interfaces/src/lib/actions/payloads/equip-item.payload';
+import { SetPlayerReadyStatePayload } from 'libs/api-interfaces/src/lib/actions/payloads/set-player-ready-state.payload';
+import { UnequipItemPayload } from 'libs/api-interfaces/src/lib/actions/payloads/unequip-item.payload';
 
 @Injectable()
 export class ActionService {
@@ -50,32 +51,39 @@ export class ActionService {
   }
 
   equipCard(cardId: string): void {
-    const payload: EquipItemPayload = {
+    this.sendAction<EquipItemPayload>(equipItemAction, {
       itemId: cardId,
       playerId: this.playerId,
-    };
-    this.sendAction(equipItemAction, payload);
+    });
   }
 
   moveCard(cardId: string, newIndex: number): void {
-    const payload: MoveCardPayload = {
+    this.sendAction<MoveCardPayload>(moveCardAction, {
       newIndex,
       itemId: cardId,
       playerId: this.playerId
-    };
-    this.sendAction(moveCardAction, payload);
+    });
   }
 
   unequipCard(cardId: string, newIndexInDeck: number): void {
-    const payload: UnequipItemPayload = {
+    this.sendAction<UnequipItemPayload>(unequipItemAction, {
       newIndexInDeck,
       itemId: cardId,
-      playerId: this.playerId
-    };
-    this.sendAction(unequipItemAction, payload);
+      playerId: this.playerId,
+    });
   }
 
-  private sendAction(name: string, payload?: any): void {
+  breakDoor(): void {
+    this.sendAction(breakDoorAction);
+  }
+
+  approveStagingReadyState(): void {
+    this.sendAction<SetPlayerReadyStatePayload>(approveStagingReadyStateAction, {
+      playerId: this.playerDataService.player.id,
+    });
+  }
+
+  private sendAction<T = any>(name: string, payload?: T): void {
     const actionMessage: ActionMessage = {
       gameId: this.gameIterationService.game.id,
       action: createAction(name, payload),

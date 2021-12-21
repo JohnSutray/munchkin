@@ -1,0 +1,49 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.versus__icon {
+  width: 4vw;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.power {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.versus__players-power {
+  @extend .power;
+
+  background-color: #eecfcf;
+}
+
+.versus__monster-power {
+  @extend .power;
+
+  background-color: #b5e0b5;
+}
+
+.power-icon {
+  width: 1vw;
+  margin-right: 10px;
+}
+
+.versus__monster-power-icon {
+  @extend .power-icon;
+}
+
+.versus__players-power-icon {
+  @extend .power-icon;
+}
+
+.versus__power-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

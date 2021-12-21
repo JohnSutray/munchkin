@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EquipmentItemComponent } from 'apps/munchkin/src/app/equipment/equipment-item/equipment-item.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CardModule } from 'apps/munchkin/src/app/card/card.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CardModule } from 'apps/munchkin/src/app/card/card.module';
     CommonModule,
     DragDropModule,
     CardModule,
+    PipesModule,
   ],
 })
 export class EquipmentItemModule {

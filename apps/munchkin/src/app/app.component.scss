@@ -2,20 +2,14 @@
   display: block;
   width: 100vw;
   height: 100vh;
-  background-color: #f39d80;
-}
-
-.workspace {
+  user-select: none;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 100%;
-
-  > * {
-    flex-grow: 1;
-  }
 }
 
 .workspace__top {
+  flex-grow: 1;
   display: flex;
   flex-direction: row;
 
@@ -24,21 +18,25 @@
   }
 }
 
+.workspace__mid {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+
+  > * {
+    flex-grow: 1;
+  }
+}
+
+.workspace__equipment {
+  margin: 10px;
+}
+
 .workspace__bottom {
-  height: 33%;
   display: flex;
   flex-direction: row;
 }
 
 .workspace__bottom-my-deck {
-  flex-grow: 1;
-}
-
-.workspace__mid {
-  display: flex;
-  flex-direction: row;
-
-  > * {
-    flex-grow: 1;
-  }
+  margin: 10px;
 }

@@ -10,5 +10,11 @@ export interface Game<TActionPayload = any> {
   readonly players: Player[];
   readonly currentAction: GameAction<TActionPayload>;
   readonly completedActions: GameAction[];
-  readonly firstPlayer: string;
+  readonly currentPlayer: string;
+  readonly currentBrokenDoor: string;
+  readonly staging: boolean;
+  readonly stagingReadyPlayers: string[];
+  readonly battleApprovedPlayers: string[];
+  readonly stagingTimeSeconds: number;
+  readonly battleTimeSeconds: number;
 }

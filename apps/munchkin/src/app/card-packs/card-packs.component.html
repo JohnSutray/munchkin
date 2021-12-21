@@ -1,4 +1,16 @@
-<munchkin-card-stack [id]="doors"></munchkin-card-stack>
-<munchkin-card-stack [id]="doorsDrop"></munchkin-card-stack>
-<munchkin-card-stack [id]="treasures"></munchkin-card-stack>
-<munchkin-card-stack [id]="treasuresDrop"></munchkin-card-stack>
+<munchkin-card-stack [connectedDrops]="doorsConnectedTo$ | async"
+                     [topCardId]="doorPlaceholder"
+                     [topCardShirtMode]="true"
+                     [stackId]="doors"
+                     [stackSize]="4"></munchkin-card-stack>
+
+<munchkin-card-stack [topCardId]="treasurePlaceholder"
+                     [topCardShirtMode]="true"
+                     [stackId]="treasures"
+                     [stackSize]="4"></munchkin-card-stack>
+
+<munchkin-card-stack [stackSize]="0"
+                     [stackId]="doorsDrop"></munchkin-card-stack>
+
+<munchkin-card-stack [stackSize]="0"
+                     [stackId]="treasuresDrop"></munchkin-card-stack>

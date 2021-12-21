@@ -1,4 +1,6 @@
 export const justTrollDoorId = 'justTrollDoorId';
+export const placeholderDoorId = 'placeholderDoorId';
+export const placeholderTreasureId = 'placeholderTreasureId';
 export const pukachuDoorId = 'pukachuDoorId';
 export const geekDoorId = 'geekDoorId';
 export const halfingDoorId = 'halfingDoorId';
@@ -56,8 +58,29 @@ export const handEquipment = [
   bowWithRibbonsTreasureId,
 ];
 
+export const damageDealers = {
+  [flamingArmorTreasureId]: 2,
+  [mithrilArmorTreasureId]: 3,
+  [helmOfCourageTreasureId]: 1,
+  [hornyHelmetTreasureId]: 1,
+};
+
+export const monsterDamage = {
+  [justTrollDoorId]: 10,
+  [pukachuDoorId]: 6,
+  [geekDoorId]: 6,
+  [hippogriffDoorId]: 16,
+};
+
 export const twoHandItems = [
   bowWithRibbonsTreasureId,
+];
+
+export const creatures = [
+  justTrollDoorId,
+  pukachuDoorId,
+  geekDoorId,
+  hippogriffDoorId,
 ];
 
 export enum EItem {
@@ -74,8 +97,38 @@ export const allItemTypes: string[] = [
   EItem.BOOTS,
 ];
 
-export const isItemType = (value: string): value is EItem =>
-  allItemTypes.includes(value);
+// export const isTreasure = (cardId: string): boolean => treasuresCollection.includes(cardId);
+
+export enum ECardType {
+  TREASURE = 'treasure',
+  DOOR = 'door'
+}
+
+export const getMonsterDamage = (doorId: string): number => {
+  if (monsterDamage[doorId]) {
+    return monsterDamage[doorId];
+  }
+
+  throw new Error('Monster has no registered damage!');
+};
+
+export const getItemDamage = (itemId: string): number => damageDealers[itemId] || 0;
+
+export const isCreature = (cardId: string) => creatures.includes(cardId);
+
+export const getCardType = (cardId: string): ECardType => {
+  if (cardId === placeholderTreasureId || treasuresCollection.includes(cardId)) {
+    return ECardType.TREASURE;
+  }
+
+  if (cardId === placeholderDoorId || doorsCollection.includes(cardId)) {
+    return ECardType.DOOR;
+  }
+
+  throw new Error(`Card type not recognized! Card id: ${cardId}`);
+};
+
+export const isItemType = (value: string): value is EItem => allItemTypes.includes(value);
 
 export const getItemType = (itemId: string): EItem => {
   if (isHead(itemId)) return EItem.HEAD;

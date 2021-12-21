@@ -7,6 +7,8 @@ import { GameIterationService } from 'apps/munchkin/src/app/services/game-iterat
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 import { EquipmentService } from 'apps/munchkin/src/app/services/equipment.service';
 import { ActionService } from 'apps/munchkin/src/app/services/action.service';
+import { of, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'munchkin-root',

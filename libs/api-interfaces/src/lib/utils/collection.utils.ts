@@ -1,4 +1,4 @@
-import { isMatch } from 'lodash-es';
+import { isMatch } from 'lodash';
 
 export const replace = <T>(
   items: T[],

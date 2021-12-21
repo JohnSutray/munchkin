@@ -1,0 +1,29 @@
+<div class="avatar__title">
+  <div class="avatar__name">
+    {{(player$ | async).name}}
+  </div>
+</div>
+
+<img class="avatar__image"
+     src="assets/icons/user.png"
+     alt="avatar">
+
+<div class="avatar__stats">
+  <div class="avatar__level">
+    <img class="avatar__level-icon"
+         src="assets/icons/level.png"
+         alt="level"/>
+    <span class="avatar__level-value">
+      {{(player$ | async).level}}
+    </span>
+  </div>
+
+  <div class="avatar__damage">
+    <img class="avatar__damage-icon"
+         src="assets/icons/sword.png"
+         alt="damage"/>
+    <span class="avatar__damage-value">
+      {{(player$ | async).level}}
+    </span>
+  </div>
+</div>

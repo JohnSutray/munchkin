@@ -1,0 +1,7 @@
+<mat-progress-bar class="status-bar__progress"
+                  [value]="(progress$ | async)?.timeLeftInPercents"></mat-progress-bar>
+
+<div *ngIf="progress$ | async as progress"
+     class="status-bar__progress-value">
+  {{progress.timeLeftInSeconds}}
+</div>

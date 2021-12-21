@@ -23,7 +23,7 @@ import { tap } from 'rxjs/operators';
 export class MyDeckComponent extends SubscribingComponent implements OnInit {
   readonly dndPointName = myDeckId;
   readonly linkedDndPoints$ = this.dndLinksService.linkedDndPoints$;
-  readonly cards$ = this.myDeckService.cards$.pipe(tap(c => console.log(c.length)));
+  readonly cards$ = this.myDeckService.cards$;
 
   constructor(
     private readonly dndLinksService: DndLinksService,

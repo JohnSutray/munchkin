@@ -1,0 +1,19 @@
+<div class="battle-board__broken-door"
+     [id]="brokenDoorId"
+     [cdkDropListConnectedTo]=""
+     (cdkDropListDropped)="brokeDoor()"
+     cdkDropList>
+  <munchkin-card *ngIf="brokenDoorId$ | async"
+                 [cardId]="brokenDoorId$ | async"
+                 [shirtMode]="showShirtIfPlaceholder$ | async"></munchkin-card>
+</div>
+
+<ng-container *ngIf="inBattleState$ | async">
+  <munchkin-versus class="battle-board__versus"></munchkin-versus>
+
+  <div>
+    <div class="battle-board__players-side">
+      <munchkin-avatar [playerId$]="battleInitiator$"></munchkin-avatar>
+    </div>
+  </div>
+</ng-container>

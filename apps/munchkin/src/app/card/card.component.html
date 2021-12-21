@@ -1,3 +1,12 @@
-<div class="card">
-  {{cardId}}
+<div class="card"
+     [class._shirt-mode]="shirtMode">
+  <div *ngIf="!shirtMode">
+    {{cardId}}
+  </div>
+
+  <div *ngIf="shirtMode"
+       class="card__shit">
+    <img class="card__shit-icon"
+         [src]="shirtImage">
+  </div>
 </div>

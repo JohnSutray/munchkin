@@ -1,4 +1,23 @@
-<munchkin-card class="card-stack__1"></munchkin-card>
-<munchkin-card class="card-stack__2"></munchkin-card>
-<munchkin-card class="card-stack__3"></munchkin-card>
-<munchkin-card class="card-stack__4"></munchkin-card>
+<div>
+  <div *ngFor="let card of iterator; index as index; first as first; last as last"
+       [style.position]="!first && 'absolute'"
+       [style.top]="cardShiftSize * index + 'px'"
+       [style.left]="cardShiftSize * index + 'px'"
+       [style.zIndex]="index + 1">
+    <munchkin-card *ngIf="!last"
+                   [id]="stackId"
+                   [cardId]="topCardId"
+                   [shirtMode]="topCardShirtMode"></munchkin-card>
+
+    <div [id]="stackId"
+         *ngIf="last"
+         [cdkDropListConnectedTo]="connectedDrops"
+         cdkDropList>
+      <munchkin-card cdkDrag
+                     [cardId]="topCardId"
+                     [shirtMode]="topCardShirtMode"></munchkin-card>
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,23 @@
+<div class="versus__monster-power">
+  <div class="versus__power-icon">
+    <img class="versus__monster-power-icon"
+         src="assets/icons/monster.png"
+         alt="monster power"/>
+  </div>
+
+  {{totalMonsterPower$ | async}}
+</div>
+
+<img class="versus__icon"
+     src="assets/icons/versus.png"
+     alt="versus">
+
+<div class="versus__players-power">
+  <div class="versus__power-icon">
+    <img class="versus__players-power-icon"
+         src="assets/icons/user.png"
+         alt="players power"/>
+  </div>
+
+  {{totalPlayersPower$ | async}}
+</div>

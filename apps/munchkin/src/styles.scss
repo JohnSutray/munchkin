@@ -1,4 +1,10 @@
+@font-face {
+  font-family: "Pangolin";
+  src: url("/assets/fonts/Pangolin-Regular.ttf")
+}
+
 head, body {
+  font-family: Pangolin, "Roboto Thin", serif;
   margin: 0;
 }
 
@@ -13,3 +19,15 @@ head, body {
 .cdk-drop-list-dragging .card-wrapper:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

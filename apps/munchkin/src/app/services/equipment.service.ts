@@ -5,7 +5,7 @@ import { isBody, isBoots, isHand, isHead } from 'libs/api-interfaces/src/lib/car
 import { map, switchMapTo } from 'rxjs/operators';
 import { BehaviorSubject, MonoTypeOperatorFunction } from 'rxjs';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
-import { without } from 'lodash-es';
+import { without } from 'lodash';
 
 @Injectable()
 export class EquipmentService {

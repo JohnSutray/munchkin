@@ -1,0 +1,15 @@
+@import "apps/munchkin/src/variables";
+
+.card-base-size {
+  width: $card-width;
+  height: $card-height;
+}
+
+.card-base {
+  font-size: 1vw;
+  cursor: grab;
+
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: #553f3e;
+}

@@ -3,14 +3,14 @@ import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable, of, zip } from 'rxjs';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { GameChange, gameUpdate } from 'libs/api-interfaces/src/lib/actions';
-import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
+import { delay, filter, map, switchMap } from 'rxjs/operators';
 
 let index = 1;
 
 @Injectable()
 export class GameIterationService {
-  private snapshotsProcessing: boolean = false;
-  private currentTasks: Observable<any>[] = [];
+  private snapshotsProcessing = false;
+  private currentTasks: Observable<never>[] = [];
   private readonly gameSnapshots: Game[] = [];
   private readonly _game$ = new BehaviorSubject<Game>(null);
 
@@ -31,7 +31,7 @@ export class GameIterationService {
     );
   }
 
-  registerTask = (duration: Observable<any>) => this.currentTasks.push(duration);
+  registerTask = (duration: Observable<never>) => this.currentTasks.push(duration);
 
   subscribeToUpdates(): void {
     this.socket.fromEvent<GameChange>(gameUpdate)

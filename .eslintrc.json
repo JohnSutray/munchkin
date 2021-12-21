@@ -9,19 +9,6 @@
         "no-restricted-imports": [
           "error",
           "libs/*"
-        ],
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
-          }
         ]
       }
     },

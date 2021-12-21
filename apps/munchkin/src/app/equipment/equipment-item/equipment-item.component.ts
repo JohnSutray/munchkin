@@ -19,6 +19,8 @@ import { MyDeckService } from 'apps/munchkin/src/app/services/my-deck.service';
 export class EquipmentItemComponent {
   readonly linkedDndPoints$ = this.dndLinksService.linkedDndPoints$;
 
+  cardDraggedOver = false;
+
   @Input() equipmentType: EItem;
   @Input() item$: Observable<string>;
 
@@ -27,6 +29,10 @@ export class EquipmentItemComponent {
       filterNotNull(),
       map(this.toDropData),
     );
+  }
+
+  get equipmentIcon(): string {
+    return `assets/icons/${this.equipmentType}.png`;
   }
 
   constructor(

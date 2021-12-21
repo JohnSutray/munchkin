@@ -26,8 +26,4 @@ export class EquipmentComponent extends SubscribingComponent implements OnInit {
   ngOnInit(): void {
     this.equipmentService.startItemsObserve(this.takeUntilDestroy);
   }
-
-  approveReadyState(): void {
-
-  }
 }

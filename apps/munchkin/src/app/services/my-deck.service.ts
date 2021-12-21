@@ -6,12 +6,13 @@ import { CardMoveOverlayService } from 'apps/munchkin/src/app/services/card-move
 import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { afterNextViewInit } from 'apps/munchkin/src/app/utils/angular.utils';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
-import { DialCardPayload, dialDoorAction, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
+import { dialDoorAction, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 import { cardMoveTransitionTime } from 'apps/munchkin/src/app/constants/animation.constants';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
-import { last, without } from 'lodash-es';
+import { last, without } from 'lodash';
+import { DialCardPayload } from '../../../../../libs/api-interfaces/src/lib/actions/payloads/dial-card.payload';
 
 interface CardDialData {
   readonly cardId: string;

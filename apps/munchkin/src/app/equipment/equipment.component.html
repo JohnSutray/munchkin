@@ -1,15 +1,18 @@
-<div class="equipment__head-row">
-  <munchkin-equipment-item [equipmentType]="EItem.HEAD"
-                           [item$]="headId$"></munchkin-equipment-item>
-  <munchkin-equipment-item [equipmentType]="EItem.HEAD"
-                           [item$]="leftHandId$"></munchkin-equipment-item>
-  <munchkin-equipment-item [item$]="bodyId$"
-                           [equipmentType]="EItem.BODY"></munchkin-equipment-item>
-  <munchkin-equipment-item [item$]="rightHandId$"
-                           [equipmentType]="EItem.HAND"></munchkin-equipment-item>
-  <munchkin-equipment-item [item$]="bootsId$"
-                           [equipmentType]="EItem.BOOTS"></munchkin-equipment-item>
+<div>
+  <div class="equipment__head-row">
+    <munchkin-equipment-item [equipmentType]="EItem.HEAD"
+                             [item$]="headId$"></munchkin-equipment-item>
+  </div>
+  <div class="equipment__body-row">
+    <munchkin-equipment-item [equipmentType]="EItem.HAND"
+                             [item$]="leftHandId$"></munchkin-equipment-item>
+    <munchkin-equipment-item [item$]="bodyId$"
+                             [equipmentType]="EItem.BODY"></munchkin-equipment-item>
+    <munchkin-equipment-item [item$]="rightHandId$"
+                             [equipmentType]="EItem.HAND"></munchkin-equipment-item>
+  </div>
+  <div class="equipment__boots-row">
+    <munchkin-equipment-item [item$]="bootsId$"
+                             [equipmentType]="EItem.BOOTS"></munchkin-equipment-item>
+  </div>
 </div>
-
-<div class="equipment__ready-button"
-     (click)="approveReadyState()"></div>

@@ -1,12 +1,18 @@
-<div>
-  <div [id]="equipmentType"
-       cdkDropList
-       [cdkDropListConnectedTo]="linkedDndPoints$ | async"
-       (cdkDropListDropped)="handleDrop($event)"
-       class="equipment__empty-item">
-    <munchkin-card *ngIf="item$ | async"
-                   cdkDrag
-                   [cdkDragData]="dropData$ | async"
-                   [cardId]="item$ | async"></munchkin-card>
+<div [id]="equipmentType"
+     cdkDropList
+     cdkDropListOrientation="horizontal"
+     [cdkDropListConnectedTo]="linkedDndPoints$ | async"
+     (cdkDropListDropped)="handleDrop($event)"
+     class="equipment"
+     [class._not-selected]="item$ | async | negate">
+  <munchkin-card class="equipment__item"
+                 *ngIf="item$ | async"
+                 cdkDrag
+                 [cdkDragData]="dropData$ | async"
+                 [cardId]="item$ | async"></munchkin-card>
+
+  <div class="equipment__icon">
+    <img class="equipment__icon-image"
+         [src]="equipmentIcon">
   </div>
 </div>

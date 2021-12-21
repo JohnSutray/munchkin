@@ -1,7 +1,7 @@
 import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@nestjs/common';
-import { generatorActionHandlers, getActionType, mutatorActionHandlers } from '../actions/action-handlers';
+import { getActionType, getGeneratorActionHandler, getMutatorActionHandler } from '../actions/action-handlers';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { GameChange, startGameAction } from 'libs/api-interfaces/src/lib/actions';
 import { doorsCollection, treasuresCollection } from 'libs/api-interfaces/src/lib/cards/cards-collection';
@@ -9,7 +9,7 @@ import { ActionTypeEnum } from 'libs/api-interfaces/src/lib/enums/action-type.en
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
-import { cloneDeep, last } from 'lodash-es';
+import { cloneDeep, last } from 'lodash';
 
 
 @Injectable()
@@ -24,6 +24,7 @@ export class GameService {
     classes: [],
     lastDiceValue: 0,
     items: [],
+    name: 'Andy',
   };
 
   readonly testPlayer2: Player = {
@@ -34,6 +35,7 @@ export class GameService {
     classes: [],
     lastDiceValue: 0,
     items: [],
+    name: 'Roman',
   };
 
   private readonly testInitialGameState: Game = {
@@ -47,8 +49,14 @@ export class GameService {
       // this.testPlayer2,
     ],
     completedActions: [],
-    firstPlayer: '',
+    currentPlayer: '',
+    currentBrokenDoor: '',
     currentAction: createAction(startGameAction),
+    staging: false,
+    stagingReadyPlayers: [],
+    battleApprovedPlayers: [],
+    battleTimeSeconds: 60,
+    stagingTimeSeconds: 60,
   };
 
   private readonly gamesSnapshots: { [key: string]: Game[] } = {
@@ -96,10 +104,10 @@ export class GameService {
 
       switch (getActionType(action.name)) {
         case ActionTypeEnum.MUTATOR:
-          game = mutatorActionHandlers[action.name](game, action.payload);
+          game = getMutatorActionHandler(action.name)(game, action.payload);
           break;
         case ActionTypeEnum.GENERATOR:
-          actions.unshift(...generatorActionHandlers[action.name](game, action.payload));
+          actions.unshift(...getGeneratorActionHandler(action.name)(game, action.payload));
           break;
       }
 

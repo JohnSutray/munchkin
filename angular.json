@@ -79,6 +79,7 @@
               "apps/munchkin/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "apps/munchkin/src/styles.scss"
             ],
             "scripts": []

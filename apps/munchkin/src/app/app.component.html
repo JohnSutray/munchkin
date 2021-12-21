@@ -1,4 +1,4 @@
-<div class="workspace" *ngIf="game$ | async">
+<ng-container *ngIf="game$ | async">
   <div class="workspace__top">
     <munchkin-opponent-workspace></munchkin-opponent-workspace>
     <munchkin-opponent-workspace></munchkin-opponent-workspace>
@@ -7,13 +7,24 @@
 
   <div class="workspace__mid">
     <munchkin-opponent-workspace></munchkin-opponent-workspace>
-    <munchkin-card-packs></munchkin-card-packs>
+    <div>
+      <munchkin-card-packs></munchkin-card-packs>
+      <munchkin-battle-board></munchkin-battle-board>
+    </div>
     <munchkin-opponent-workspace></munchkin-opponent-workspace>
   </div>
 
 
   <div class="workspace__bottom">
-    <munchkin-my-deck class="workspace__bottom-my-deck"></munchkin-my-deck>
-    <munchkin-equipment></munchkin-equipment>
+    <munchkin-equipment class="workspace__equipment"></munchkin-equipment>
+
+    <div style="display: flex; flex-direction: column">
+      <div style="flex-grow: 1">
+        <munchkin-approve-ready-state></munchkin-approve-ready-state>
+      </div>
+      <munchkin-my-deck class="workspace__bottom-my-deck"></munchkin-my-deck>
+    </div>
   </div>
-</div>
+
+  <munchkin-status-bar></munchkin-status-bar>
+</ng-container>

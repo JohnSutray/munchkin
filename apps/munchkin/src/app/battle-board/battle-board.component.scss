@@ -1,0 +1,29 @@
+@import "apps/munchkin/src/common";
+
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.battle-board__broken-door {
+  @extend .card-base;
+  @extend .card-base-size;
+}
+
+.battle-board__players-side {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > * {
+    margin-right: 10px;
+  }
+}
+
+.battle-board__versus {
+  margin-left: 2vh;
+  margin-right: 2vh;
+}

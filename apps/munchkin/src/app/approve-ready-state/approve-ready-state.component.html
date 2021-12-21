@@ -1,0 +1,6 @@
+<div *ngIf="canSetReadyState$ | async"
+     (click)="approveStagingReadyState()">
+  <img class="approve-ready-state__icon"
+       alt="approve"
+       src="assets/icons/approve.png">
+</div>
