@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "action-generator-schematic": {
+      "description": "Generate a game server side action.",
+      "factory": "./action-generator-schematic/index#actionGenerator",
+      "schema": "./action-generator-schematic/schema.json"
+    }
+  }
+}

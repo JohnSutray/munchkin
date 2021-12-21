@@ -27,6 +27,9 @@
     ]
   },
   "projects": {
+    "action-generator": {
+      "tags": []
+    },
     "api": {
       "tags": []
     },
