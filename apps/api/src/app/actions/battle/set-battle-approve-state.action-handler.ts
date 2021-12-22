@@ -1,8 +1,6 @@
 import { MutatorActionHandler } from '../models/mutator-action-handler';
 import { uniq, without } from 'lodash';
-import {
-  BattleApprovePayload
-} from '../../../../../../libs/api-interfaces/src/lib/actions/payloads/battle-approve.payload';
+import { BattleApprovePayload } from 'libs/api-interfaces/src/lib/actions/payloads/battle-approve.payload';
 
 export const setBattleApproveStateActionHandler: MutatorActionHandler<BattleApprovePayload> = (game, payload) => ({
   ...game,

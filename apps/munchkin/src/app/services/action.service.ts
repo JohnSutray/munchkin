@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
-import {
-  actionEventName,
-  ActionMessage, approveStagingReadyStateAction, breakDoorAction,
-  equipItemAction,
-  joinGameEventName, JoinGameMessage, moveCardAction, resetTestGameStateEventName, setPlayerReadyStateAction,
-  startGameAction, unequipItemAction,
-} from 'libs/api-interfaces/src/lib/actions';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
 import { MoveCardPayload } from 'libs/api-interfaces/src/lib/actions/payloads/move-card.payload';
 import { EquipItemPayload } from 'libs/api-interfaces/src/lib/actions/payloads/equip-item.payload';
-import { SetPlayerReadyStatePayload } from 'libs/api-interfaces/src/lib/actions/payloads/set-player-ready-state.payload';
+import {
+  SetPlayerReadyStatePayload,
+} from 'libs/api-interfaces/src/lib/actions/payloads/set-player-ready-state.payload';
 import { UnequipItemPayload } from 'libs/api-interfaces/src/lib/actions/payloads/unequip-item.payload';
+import { ActionMessage } from 'libs/api-interfaces/src/lib/actions/common/action-message.model';
+import { JoinGameMessage } from 'libs/api-interfaces/src/lib/actions/common/join-game-message.model';
+import {
+  actionEventName,
+  joinGameEventName,
+  resetTestGameStateEventName,
+} from 'libs/api-interfaces/src/lib/actions/common/common-events';
+import { GameActions } from 'libs/api-interfaces/src/lib/actions';
 
 @Injectable()
 export class ActionService {
@@ -40,7 +43,7 @@ export class ActionService {
   startGame(): void {
     const message: ActionMessage = {
       gameId: '1',
-      action: createAction(startGameAction),
+      action: createAction(GameActions.startGameAction),
     };
 
     this.socket.emit(actionEventName, message);
@@ -51,14 +54,14 @@ export class ActionService {
   }
 
   equipCard(cardId: string): void {
-    this.sendAction<EquipItemPayload>(equipItemAction, {
+    this.sendAction<EquipItemPayload>(GameActions.equipItemAction, {
       itemId: cardId,
       playerId: this.playerId,
     });
   }
 
   moveCard(cardId: string, newIndex: number): void {
-    this.sendAction<MoveCardPayload>(moveCardAction, {
+    this.sendAction<MoveCardPayload>(GameActions.moveCardAction, {
       newIndex,
       itemId: cardId,
       playerId: this.playerId
@@ -66,7 +69,7 @@ export class ActionService {
   }
 
   unequipCard(cardId: string, newIndexInDeck: number): void {
-    this.sendAction<UnequipItemPayload>(unequipItemAction, {
+    this.sendAction<UnequipItemPayload>(GameActions.unequipItemAction, {
       newIndexInDeck,
       itemId: cardId,
       playerId: this.playerId,
@@ -74,11 +77,11 @@ export class ActionService {
   }
 
   breakDoor(): void {
-    this.sendAction(breakDoorAction);
+    this.sendAction(GameActions.breakDoorAction);
   }
 
   approveStagingReadyState(): void {
-    this.sendAction<SetPlayerReadyStatePayload>(approveStagingReadyStateAction, {
+    this.sendAction<SetPlayerReadyStatePayload>(GameActions.approveStagingReadyStateAction, {
       playerId: this.playerDataService.player.id,
     });
   }

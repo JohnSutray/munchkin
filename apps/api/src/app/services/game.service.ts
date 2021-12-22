@@ -1,15 +1,20 @@
 import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@nestjs/common';
-import { getActionType, getGeneratorActionHandler, getMutatorActionHandler } from '../actions/action-handlers';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
-import { GameChange, startGameAction } from 'libs/api-interfaces/src/lib/actions';
 import { doorsCollection, treasuresCollection } from 'libs/api-interfaces/src/lib/cards/cards-collection';
 import { ActionTypeEnum } from 'libs/api-interfaces/src/lib/enums/action-type.enum';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { GameAction } from 'libs/api-interfaces/src/lib/models/action';
 import { cloneDeep, last } from 'lodash';
+import { GameChange } from 'libs/api-interfaces/src/lib/actions/common/game-change.model';
+import {
+  getActionType,
+  getGeneratorActionHandler,
+  getMutatorActionHandler,
+} from 'apps/api/src/app/action-handlers-utils';
+import { GameActions } from 'libs/api-interfaces/src/lib/actions';
 
 
 @Injectable()
@@ -51,7 +56,7 @@ export class GameService {
     completedActions: [],
     currentPlayer: '',
     currentBrokenDoor: '',
-    currentAction: createAction(startGameAction),
+    currentAction: createAction(GameActions.startGameAction),
     staging: false,
     stagingReadyPlayers: [],
     battleApprovedPlayers: [],

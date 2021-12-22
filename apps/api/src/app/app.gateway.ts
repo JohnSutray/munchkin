@@ -8,15 +8,15 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { GameService } from 'apps/api/src/app/services/game.service';
+import { ActionMessage } from 'libs/api-interfaces/src/lib/actions/common/action-message.model';
+import { JoinGameMessage } from 'libs/api-interfaces/src/lib/actions/common/join-game-message.model';
+import { GameChange } from 'libs/api-interfaces/src/lib/actions/common/game-change.model';
 import {
   actionEventName,
-  ActionMessage,
-  GameChange,
   gameUpdate,
   joinGameEventName,
-  JoinGameMessage,
   resetTestGameStateEventName,
-} from 'libs/api-interfaces/src/lib/actions';
+} from 'libs/api-interfaces/src/lib/actions/common/common-events';
 
 @WebSocketGateway(3333)
 export class AppGateway implements OnGatewayInit {

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { GameIterationService } from '../services/game-iteration.service';
-import {
-  setStagingGameStateAction,
-  startBattleAction,
-  startStagingAction,
-} from '../../../../../libs/api-interfaces/src/lib/actions';
 import { filter, map, mapTo, share, switchMap, takeUntil } from 'rxjs/operators';
 import { interval, merge, Observable, of, timer } from 'rxjs';
+import { GameActions } from 'libs/api-interfaces/src/lib/actions';
 
 const PROGRESS_TICK_INTERVAL = 100;
 
@@ -27,9 +23,9 @@ export class StatusBarComponent {
   readonly battleTime = secondsToMilliseconds(this.gameIterationService.game.battleTimeSeconds);
 
   readonly progress$: Observable<CurrentProgress> = merge(
-    this.gameIterationService.updatesOfType$(startStagingAction).pipe(mapTo(this.stagingTime)),
-    this.gameIterationService.updatesOfType$(startBattleAction).pipe(mapTo(this.battleTime)),
-    this.gameIterationService.updatesOfType$(setStagingGameStateAction).pipe(
+    this.gameIterationService.updatesOfType$(GameActions.startStagingAction).pipe(mapTo(this.stagingTime)),
+    this.gameIterationService.updatesOfType$(GameActions.startBattleAction).pipe(mapTo(this.battleTime)),
+    this.gameIterationService.updatesOfType$(GameActions.setStagingGameStateAction).pipe(
       filter(game => !game.staging),
       mapTo(null),
     ),

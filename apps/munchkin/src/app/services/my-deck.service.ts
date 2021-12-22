@@ -6,13 +6,13 @@ import { CardMoveOverlayService } from 'apps/munchkin/src/app/services/card-move
 import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import { afterNextViewInit } from 'apps/munchkin/src/app/utils/angular.utils';
 import { GameIterationService } from 'apps/munchkin/src/app/services/game-iteration.service';
-import { dialDoorAction, dialTreasureAction } from 'libs/api-interfaces/src/lib/actions';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
 import { PlayerDataService } from 'apps/munchkin/src/app/services/player-data.service';
 import { cardMoveTransitionTime } from 'apps/munchkin/src/app/constants/animation.constants';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { last, without } from 'lodash';
-import { DialCardPayload } from '../../../../../libs/api-interfaces/src/lib/actions/payloads/dial-card.payload';
+import { GameActions } from 'libs/api-interfaces/src/lib/actions';
+import { DialCardPayload } from 'libs/api-interfaces/src/lib/actions/payloads/dial-card.payload';
 
 interface CardDialData {
   readonly cardId: string;
@@ -24,15 +24,15 @@ export class MyDeckService {
   private readonly _cards$ = new BehaviorSubject<string[]>([]);
 
   private readonly cardDialUpdates$ = merge(
-    this.gameIterationService.updatesOfType$(dialDoorAction),
-    this.gameIterationService.updatesOfType$(dialTreasureAction),
+    this.gameIterationService.updatesOfType$(GameActions.dialDoorAction),
+    this.gameIterationService.updatesOfType$(GameActions.dialTreasureAction),
   ).pipe(
     filter(this.onlyForCurrentPlayer.bind(this)),
   );
 
   private actionTypeToDeckIdMap = {
-    [dialDoorAction]: doorsId,
-    [dialTreasureAction]: treasuresId,
+    [GameActions.dialDoorAction]: doorsId,
+    [GameActions.dialTreasureAction]: treasuresId,
   };
 
   readonly cards$ = this._cards$.asObservable();

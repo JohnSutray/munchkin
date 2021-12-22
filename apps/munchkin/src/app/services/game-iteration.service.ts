@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable, of, zip } from 'rxjs';
 import { Game } from 'libs/api-interfaces/src/lib/models/game';
-import { GameChange, gameUpdate } from 'libs/api-interfaces/src/lib/actions';
 import { delay, filter, map, switchMap } from 'rxjs/operators';
+import { GameChange } from 'libs/api-interfaces/src/lib/actions/common/game-change.model';
+import { gameUpdate } from 'libs/api-interfaces/src/lib/actions/common/common-events';
 
 let index = 1;
 

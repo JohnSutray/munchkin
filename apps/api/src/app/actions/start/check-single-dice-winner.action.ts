@@ -1,10 +1,10 @@
-import { createSelectFirstPlayerAction } from 'apps/api/src/app/actions/start/select-first-player.action';
 import { createAction } from 'libs/api-interfaces/src/lib/actions/create-action';
-import { createDiceThrowAction } from 'apps/api/src/app/actions/common/dice-throw.action';
-import { checkSingleDiceWinnerAction, startStagingAction } from 'libs/api-interfaces/src/lib/actions';
 import { GeneratorActionHandler } from 'apps/api/src/app/actions/models/generator-action-handler';
 import { Player } from 'libs/api-interfaces/src/lib/models/player';
 import { filter, maxBy } from 'lodash';
+import { SelectFirstPlayerPayload } from 'libs/api-interfaces/src/lib/actions/payloads/select-first-player.payload';
+import { GameActions } from 'libs/api-interfaces/src/lib/actions';
+import { DiceThrowPayload } from 'libs/api-interfaces/src/lib/actions/payloads/dice-throw.payload';
 
 export const checkSingleDiceWinnerActionHandler: GeneratorActionHandler = game => {
   const { lastDiceValue } = maxBy(game.players, 'lastDiceValue');
@@ -12,14 +12,18 @@ export const checkSingleDiceWinnerActionHandler: GeneratorActionHandler = game =
 
   if (playersWithMaxValue.length > 1) {
     return [
-      ...playersWithMaxValue.map(createDiceThrowAction),
-      createAction(checkSingleDiceWinnerAction),
+      ...playersWithMaxValue.map(
+        player => createAction<DiceThrowPayload>(GameActions.diceThrowAction, { playerId: player.id }),
+      ),
+      createAction(GameActions.checkSingleDiceWinnerAction),
     ];
   }
 
   return [
-    createSelectFirstPlayerAction(playersWithMaxValue[0]),
-    createAction(startStagingAction),
+    createAction<SelectFirstPlayerPayload>(
+      GameActions.selectFirstPlayerAction, { playerId: playersWithMaxValue[0].id },
+    ),
+    createAction(GameActions.startStagingAction),
   ];
 };
 

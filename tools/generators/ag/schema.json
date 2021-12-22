@@ -2,16 +2,42 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "$id": "ag",
+  "title": "Generates action handler",
   "type": "object",
   "properties": {
-    "name": {
+    "actionName": {
       "type": "string",
-      "description": "Library name",
+      "description": "Name of new action",
       "$default": {
         "$source": "argv",
         "index": 0
       }
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of new action(g/m); generator or mutator",
+      "$default": {
+        "$source": "argv",
+        "index": 1
+      }
+    },
+    "folder": {
+      "type": "string",
+      "description": "Type of new action(g/m); generator or mutator",
+      "$default": {
+        "$source": "argv",
+        "index": 2
+      }
+    },
+    "onlyUpdate": {
+      "type": "boolean",
+      "description": "Only updates actions",
+      "$default": {
+        "$source": "argv",
+        "index": 3
+      }
     }
   },
-  "required": ["name"]
+  "required": [
+  ]
 }
